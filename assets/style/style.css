@@ -1,0 +1,55 @@
+html {
+    box-sizing: border-box;
+  }
+  
+  .jumboStyle {
+    text-align: center;
+    background-color: rgb(24, 12, 48);
+    color: white;
+  }
+  
+  body {
+    background-color: rgb(107, 111, 167);
+  }
+  
+  .searchBar {
+    margin-right: 10px;
+    padding-left: 5px;
+  }
+  
+  .forecast {
+    text-align: center
+  }
+  
+  .uvHigh {
+    background-color: red;
+    color: white
+  }
+  
+  .uvSafe {
+    background-color: green;
+    color: white
+  }
+  
+  .uvMed {
+    background-color: yellow;
+    color: black;
+    
+  }
+  
+  .uvMod {
+    background-color: orange;
+    color: black;
+  }
+  
+  span {
+    padding: 5px;
+  }
+  
+  .fiveForecastStyle {
+    background-color: lightblue;
+    color: black;
+    margin: 0 auto;
+    margin-right: 5px;
+    padding: 10px;
+  }
