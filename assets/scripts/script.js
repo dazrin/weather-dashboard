@@ -96,7 +96,11 @@ function getCityWeather(userInput){
 //Retreive UV data
 //1. fetch uv data from API
 //2. return data as a .json object
-//3. 
+//3. reference the returned .json data in a variable
+//4. dynamically create HTML elements to display the returned data
+//5. round the uv data using Math.floor() method
+//6. display whether or not the uv data is safe 
+//7. append dynamically created elements to existing elements
 const getUvIndex = (lon, lat) =>{
   fetch(`https://api.openweathermap.org/data/2.5/uvi?appid=ad48a33f3b48cd0e6865e7b3613dcfa6&lat=${lat}&lon=${lon}`)
     .then(response => response.json())
@@ -125,6 +129,13 @@ const getUvIndex = (lon, lat) =>{
     .catch(error => console.error(error))
 }
 
+//Retreive the 5 day forecast of a given city
+//1. fetch forecast from API
+//2. return fetched data as a .json object
+//3. store data as a list in a variable (list)
+//4. iterate over the list variable
+//5. dynamically create an html elements to display fetched data
+//6. append created element to existing html element
 function getFiveDayForecast(lon, lat) {
   forecastElement.innerHTML = '';
   fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=ad48a33f3b48cd0e6865e7b3613dcfa6`)
@@ -147,7 +158,7 @@ function getFiveDayForecast(lon, lat) {
   })
   .catch(error => console.error(error))
 }
-
+//Displays the past searches
 displayPastSearches();
 
 
