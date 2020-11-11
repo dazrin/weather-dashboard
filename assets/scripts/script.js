@@ -1,14 +1,23 @@
-//Element selectors and input variables
-var userInput;
-var uvIndex;
-var pastSearches = JSON.parse(localStorage.getItem('cities')) || [];
+//Element selectors
 var displayInfo = document.getElementById('info');
 var forecastElement = document.getElementById('daysForecast');
 var citiesSearched = document.getElementById('citiesSearched');
 
-// api key: ad48a33f3b48cd0e6865e7b3613dcfa6
+//Contains either a list of the past searched cities,
+// or an empty array if there is no cities array already stored in local storage
+var pastSearches = JSON.parse(localStorage.getItem('cities')) || [];
 
-//Event listener for search button
+//Variables for input and uv information
+var userInput;
+var uvIndex;
+
+// My OpenWeatherAPI key: ad48a33f3b48cd0e6865e7b3613dcfa6
+
+//Search button
+//1. page waiting for an on-click event
+//2. if the user clicked the button on the page, set the contents (value) of the searchCity element as the userInput variable
+//3. pass that variable containing the user's input to a function that displays the forecast data onto the page
+//4. empty the users input from the search bar
 document.addEventListener('click', function (e) {
 var target = e.target;
 if(target.classList.contains('btn')){
@@ -20,13 +29,14 @@ if(target.classList.contains('btn')){
 })
 
 // Displays recently searched cities to the screen
-//1. iterate through citiesSearched array
-//2. dynamically create a div to display the results
-//3. set each element the index iterates through in the array to the newly created div
-//4. attach (append) the newly created div to the 'citiesSearched' id element
+//1. ensure the search bar is empty
+//2. iterate through cities array stored in local storage
+//2. dynamically create an html element to display the contents of the array (past searches)
+//3. store the iterated contents of the past searches (cities) array to the created element's HTML with a line divider between each element
+//4. attach (append) the newly created div to the existing 'citiesSearched' id element
 function displayPastSearches() {
     //set to empty before every render
-    citiesSearched.innerHTML = ''
+    citiesSearched.innerHTML = '';
   
     for (var i = 0; i < pastSearches.length; i++) {
       var city = document.createElement('div');
@@ -34,7 +44,6 @@ function displayPastSearches() {
       citiesSearched.append(city);
     };
   };
-
 
 
 //Captilize first letter of every word in the string
@@ -74,7 +83,7 @@ function displayForecast(userInput) {
 //5. attach (append) stored information to the 
 function getCityWeather(userInput){
   displayInfo.innerHTML = '';
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${userInput}&appid=ad48a33f3b48cd0e6865e7b3613dcfa6`)
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${userInput}&units=metric&appid=ad48a33f3b48cd0e6865e7b3613dcfa6`)
   .then(response => response.json())
   .then(({ main: { temp, humidity }, wind: { speed }, coord: { lon, lat } }) => {
     var info = document.createElement('div');
@@ -130,15 +139,16 @@ const getUvIndex = (lon, lat) =>{
 }
 
 //Retreive the 5 day forecast of a given city
-//1. fetch forecast from API
-//2. return fetched data as a .json object
-//3. store data as a list in a variable (list)
-//4. iterate over the list variable
-//5. dynamically create an html elements to display fetched data
-//6. append created element to existing html element
+//1. empty forecast element
+//2. fetch forecast with metric units from API
+//3. return fetched data as a .json object
+//4. store data as a list in a variable (list)
+//5. display each node in the forecast data
+//6. dynamically create an html elements to display fetched data
+//7. append dynamically created html elements (nodes) to existing forecast html element
 function getFiveDayForecast(lon, lat) {
   forecastElement.innerHTML = '';
-  fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=ad48a33f3b48cd0e6865e7b3613dcfa6`)
+  fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=ad48a33f3b48cd0e6865e7b3613dcfa6`)
   .then(response => response.json())
   .then(data => {
     //converting unix time stamp to a date time
